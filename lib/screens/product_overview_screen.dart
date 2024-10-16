@@ -31,36 +31,13 @@ class ProductOverviewScreen extends StatelessWidget {
             title: Text(product['title'] as String),
             subtitle:
                 Text('\$${(product['price'] as double).toStringAsFixed(2)}'),
-            trailing: Consumer<Cart>(
-              builder: (ctx, cart, child) {
-                final cartItem = cart.items[product['id']] ??
-                    CartItem(
-                      id: '',
-                      title: product['title'] as String,
-                      price: product['price'] as double,
-                      quantity: 0,
-                    );
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () {
-                        cart.removeSingleItem(product['id'] as String);
-                      },
-                    ),
-                    Text(cartItem.quantity.toString()),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {
-                        cart.addItem(
-                          product['id'] as String,
-                          product['title'] as String,
-                          product['price'] as double,
-                        );
-                      },
-                    ),
-                  ],
+            trailing: IconButton(
+              icon: Icon(Icons.add_shopping_cart),
+              onPressed: () {
+                Provider.of<Cart>(context, listen: false).addItem(
+                  product['id'] as String,
+                  product['title'] as String,
+                  product['price'] as double,
                 );
               },
             ),

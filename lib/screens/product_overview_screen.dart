@@ -1,5 +1,4 @@
 import 'package:cart_app_provider/model/cart.dart';
-import 'package:cart_app_provider/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +18,7 @@ class ProductOverviewScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              Navigator.of(context).pushNamed(CartScreen.routeName);
+              Navigator.of(context).pushNamed('/cart');
             },
           ),
         ],
@@ -27,17 +26,41 @@ class ProductOverviewScreen extends StatelessWidget {
       body: ListView.builder(
         itemCount: products.length,
         itemBuilder: (ctx, index) {
+          final product = products[index];
           return ListTile(
-            title: Text(products[index]['title'] as String),
-            subtitle: Text(
-                '\$${(products[index]['price'] as double).toStringAsFixed(2)}'),
-            trailing: IconButton(
-              icon: Icon(Icons.add_shopping_cart),
-              onPressed: () {
-                Provider.of<Cart>(context, listen: false).addItem(
-                  products[index]['id'] as String,
-                  products[index]['title'] as String,
-                  products[index]['price'] as double,
+            title: Text(product['title'] as String),
+            subtitle:
+                Text('\$${(product['price'] as double).toStringAsFixed(2)}'),
+            trailing: Consumer<Cart>(
+              builder: (ctx, cart, child) {
+                final cartItem = cart.items[product['id']] ??
+                    CartItem(
+                      id: '',
+                      title: product['title'] as String,
+                      price: product['price'] as double,
+                      quantity: 0,
+                    );
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {
+                        cart.removeSingleItem(product['id'] as String);
+                      },
+                    ),
+                    Text(cartItem.quantity.toString()),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        cart.addItem(
+                          product['id'] as String,
+                          product['title'] as String,
+                          product['price'] as double,
+                        );
+                      },
+                    ),
+                  ],
                 );
               },
             ),

@@ -44,18 +44,19 @@ class CartScreen extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               itemCount: cart.items.length,
-              itemBuilder: (ctx, index) => ListTile(
-                title: Text(cart.items.values.toList()[index].title),
-                subtitle: Text(
-                  'Quantity: ${cart.items.values.toList()[index].quantity}',
-                ),
-                trailing: IconButton(
-                  icon: Icon(Icons.remove),
-                  onPressed: () {
-                    cart.removeItem(cart.items.keys.toList()[index]);
-                  },
-                ),
-              ),
+              itemBuilder: (ctx, index) {
+                final cartItem = cart.items.values.toList()[index];
+                return ListTile(
+                  title: Text(cartItem.title),
+                  subtitle: Text('Quantity: ${cartItem.quantity}'),
+                  trailing: IconButton(
+                    icon: Icon(Icons.remove),
+                    onPressed: () {
+                      cart.removeItem(cart.items.keys.toList()[index]);
+                    },
+                  ),
+                );
+              },
             ),
           ),
         ],

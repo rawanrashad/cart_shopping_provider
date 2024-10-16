@@ -1,6 +1,7 @@
 import 'package:cart_app_provider/model/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart' as badges;
 
 class ProductOverviewScreen extends StatelessWidget {
   final List<Map<String, Object>> products = [
@@ -15,11 +16,22 @@ class ProductOverviewScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Guider Mate Shop'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.of(context).pushNamed('/cart');
-            },
+          Consumer<Cart>(
+            builder: (_, cart, ch) => IconButton(
+              icon: badges.Badge(
+                badgeContent: Text(
+                  cart.itemCount.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: Icon(Icons.shopping_cart),
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: Colors.red,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/cart');
+              },
+            ),
           ),
         ],
       ),

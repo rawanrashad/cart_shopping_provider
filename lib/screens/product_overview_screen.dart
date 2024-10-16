@@ -5,16 +5,16 @@ import 'package:provider/provider.dart';
 
 class ProductOverviewScreen extends StatelessWidget {
   final List<Map<String, Object>> products = [
-    {'id': 'p1', 'title': 'Product 1', 'price': 29.99},
-    {'id': 'p2', 'title': 'Product 2', 'price': 19.99},
-    {'id': 'p3', 'title': 'Product 3', 'price': 39.99},
+    {'id': 'p1', 'title': 'Guider Mate Smart Stick', 'price': 299.99},
+    {'id': 'p2', 'title': 'Guider Light', 'price': 149.99},
+    {'id': 'p3', 'title': 'Braile Learner Kit', 'price': 39.99},
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shop'),
+        title: Text('Guider Mate Shop'),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
